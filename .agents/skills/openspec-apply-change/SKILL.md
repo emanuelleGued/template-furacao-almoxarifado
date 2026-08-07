@@ -142,6 +142,7 @@ What would you like to do?
 ```
 
 **Guardrails**
+- **Caveman skill is active by default** - unless the user says otherwise, use the caveman (ultra-compressed) communication mode while implementing tasks in this stage.
 - Keep going through tasks until done or blocked
 - Always read context files before starting (from the apply instructions output)
 - If task is ambiguous, pause and ask before implementing

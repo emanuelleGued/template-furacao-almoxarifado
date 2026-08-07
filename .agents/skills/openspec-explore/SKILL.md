@@ -279,6 +279,7 @@ But this summary is optional. Sometimes the thinking IS the value.
 
 ## Guardrails
 
+- **Caveman skill is MANDATORILY DISABLED** - never invoke the caveman (ultra-compressed) communication mode while in explore mode, regardless of prior session state. Communicate normally and fully.
 - **Don't implement** - Never write code or implement features. Creating OpenSpec artifacts is fine, writing application code is not.
 - **Don't fake understanding** - If something is unclear, dig deeper
 - **Don't rush** - Discovery is thinking time, not task time

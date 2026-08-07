@@ -106,6 +106,7 @@ After completing all artifacts, summarize:
   - These guide what you write, but should never appear in the output
 
 **Guardrails**
+- **Caveman skill is MANDATORILY DISABLED** - never invoke the caveman (ultra-compressed) communication mode while proposing a change, regardless of prior session state. Communicate normally and fully.
 - Create ALL artifacts needed for implementation (as defined by schema's `apply.requires`)
 - Always read dependency artifacts before creating a new one
 - If context is critically unclear, ask the user - but prefer making reasonable decisions to keep momentum

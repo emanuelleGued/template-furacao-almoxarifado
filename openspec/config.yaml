@@ -9,12 +9,30 @@ schema: spec-driven
 #     We use conventional commits
 #     Domain: e-commerce platform
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+rules:
+  proposal:
+    - Manter foco em por que a mudanca existe.
+    - Nao abrir a change sem objetivo e escopo claros (Definition of Ready).
+    - Explicitar o que fica fora de escopo (nao-objetivos).
+    - Escrever em portugues.
+    - Nao usar a skill/modo caveman; comunicar de forma normal e completa.
+  design:
+    - Explicar decisoes tecnicas e trade-offs.
+    - Cada decisao deve registrar o racional e a alternativa rejeitada.
+    - Cada risco deve vir com mitigacao, nao so o reconhecimento.
+    - Registrar duvidas em aberto de forma nomeada, nao como suposicao implicita.
+    - Escrever em portugues.
+    - Nao usar a skill/modo caveman; comunicar de forma normal e completa.
+  specs:
+    - Ficar no nivel da intencao (o que/por que); nao descer a nome de variavel ou detalhe de implementacao.
+    - Cada requisito deve ter cenario(s) cobrindo caminho feliz e bordas/erro.
+    - Cenarios devem usar exatamente #### (formato WHEN/THEN); 3 hashtags falha silenciosamente.
+    - Escrever em portugues.
+    - Nao usar a skill/modo caveman; comunicar de forma normal e completa.
+  tasks:
+    - Quebrar trabalho em passos atomicos e verificaveis.
+    - Ordenar por dependencia.
+    - Incluir validacao como fase final explicita (rodar testes/lint, conferir criterios).
+    - Nao marcar task como concluida sem evidencia (teste, execucao ou trecho conferido).
+    - Escrever em portugues.
+    - Nao usar a skill/modo caveman; comunicar de forma normal e completa.
