@@ -2,10 +2,21 @@ schema: spec-driven
 
 context: |
   Antes de criar ou alterar artefatos, consulte os documentos aplicáveis:
-  - docs/AGENTS.md: organização da documentação e referências gerais.
-  - docs/prds/AGENTS.md: organização dos PRDs, incluindo o índice e os PRDs por tela.
-  - docs/Constituicao/: decisões de stack, arquitetura e convenções do projeto.
-  - docs/prds/: requisitos e comportamento esperado das telas e fluxos afetados.
+  - docs/prds/minimundo.md: única fonte de verdade do domínio. Requisito, campo, papel de
+    usuário ou regra que não esteja lá não existe. Não parafraseie o minimundo: cite a seção
+    de origem e escreva apenas o que o artefato acrescenta.
+  - docs/prds/PRD-00-indice.md: escopo da POC, telas, funcionalidades e os invariantes do
+    domínio. Nenhuma change pode contrariar um invariante; cite-o pelo nome, não o reescreva.
+    A tabela de funcionalidades define o que está na POC; ampliar escopo é decisão explícita.
+  - docs/prds/: comportamento esperado das telas afetadas. Um PRD por tela, uma tela por rota.
+  - docs/AGENTS.md: organização da documentação, pré-requisitos e ordem de leitura.
+  - docs/prds/AGENTS.md: organização interna dos PRDs.
+  - docs/Constituicao/: decisões de stack, arquitetura e convenções. Documento sem decisão
+    registrada significa decisão não tomada: proponha e confirme, não presuma.
+
+  Ambiguidade que bloqueia o trabalho vira pergunta ao responsável. Ambiguidade que não
+  bloqueia vira dúvida em aberto, nomeada pela funcionalidade afetada, nunca suposição
+  implícita.
 
 rules:
   proposal:
