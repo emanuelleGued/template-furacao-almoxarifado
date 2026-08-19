@@ -86,11 +86,41 @@ As cores, ao contrário, transferem exatamente. Os nove valores usados na refer�
 
 **Racional.** O CLI usa sintaxe de importação com atributo de tipo, que o Node 16 não interpreta e que faz o comando falhar antes de executar. Node 20.19.2 já está instalado na máquina.
 
+### D10 — Escala decimal única de três casas
+
+**Decisão.** Toda quantidade tem escala decimal de três casas, qualquer que seja a unidade de medida. `Quantidade` guarda milésimos como inteiro; a coluna do banco é decimal com escala 3; a exibição corta os zeros à direita.
+
+**Racional.** Das seis unidades do minimundo, metro e litro admitem fração; unidade, caixa, pacote e resma, não. Uma escala única cobre as duas naturezas com um só caminho no domínio, e o corte de zeros à direita elimina o único efeito visível indesejado — dez resmas continuam aparecendo como "10", não como "10,000".
+
+`arquitetura.md` já havia se comprometido com essa direção ao exigir a conversão entre `Prisma.Decimal` e `Quantidade`: escala zero teria pedido um tipo inteiro, não decimal.
+
+**Alternativa rejeitada — quantidade inteira.** É a leitura mais literal do minimundo, que nunca exibe fração. Rejeitada porque tornaria impossível registrar meio litro de álcool, e porque exigiria reescrever a passagem de `arquitetura.md` que fixa a conversão decimal.
+
+**Alternativa rejeitada — escala por unidade de medida.** Escala zero para unidade, caixa, pacote e resma; três casas para metro e litro. Mais fiel à realidade física, rejeitada pelo custo: `Quantidade` passaria a carregar a unidade, a aritmética entre escalas diferentes precisaria ser proibida no tipo, e cada mensagem de erro mudaria de texto conforme a unidade. Peso alto para uma POC, e a regra "resma não aceita fração" não está enunciada no minimundo.
+
+**Consequência registrada.** A decisão vive no `PRD-00-indice.md` sob o nome **Escala da quantidade**. `arquitetura.md` a cita pelo nome e não repete a escala, como já fazia com os invariantes.
+
+### D11 — As telas vêm antes do Prisma, sobre um adaptador em memória
+
+**Decisão.** A camada de aplicação declara as portas dos repositórios; a primeira implementação delas guarda os dados em memória. As sete telas são construídas contra essas portas e ficam navegáveis sem banco. O adaptador Prisma entra depois, na fase 11, e nenhuma tela muda.
+
+**Racional.** A arquitetura já separa porta de implementação, e `conventions.md` **exige** implementações em memória das portas para a faixa de teste de caso de uso:
+
+> Caso de uso | Vitest | Fluxo completo da operação, com implementações em memória das portas, sem banco e sem I/O
+
+Ou seja, esse adaptador teria de existir de qualquer forma. Antecipá-lo dá três coisas ao mesmo tempo: o dublê que os testes de caso de uso exigem, um ambiente de desenvolvimento que roda sem PostgreSQL instalado, e a prova prática de que a fronteira da porta está no lugar certo — se a troca para o Prisma exigir mexer em tela, a fronteira estava errada.
+
+**Alternativa rejeitada.** Seguir a ordem original, com Prisma e migration antes das telas. Rejeitada porque adia toda a interface para depois de três fases de infraestrutura, e porque não produz o dublê de teste que a faixa de caso de uso vai exigir de qualquer maneira.
+
+**Alternativa rejeitada.** Construir as telas com dados fixos escritos dentro dos componentes. Rejeitada porque não passa pelas portas: seria descartada inteira na fase 11, e ainda colocaria dado de domínio na camada Web, contra `arquitetura.md`.
+
+**Consequência registrada.** A escolha do adaptador é resolvida por variável de ambiente, num único ponto de composição. A carga de exemplo do modo em memória não é seed de banco e não se confunde com o seed do primeiro usuário descrito em `conventions.md` — ela existe só enquanto o modo em memória existir.
+
 ## Riscos
 
 | Risco | Mitigação |
 | --- | --- |
-| A escala decimal da quantidade não está definida, e sem ela não é possível escrever o tipo da coluna, o value object nem a validação. | As fases de fundação e de autenticação não tocam quantidade e podem começar. A fase de domínio não inicia sem a resposta registrada no `PRD-00-indice.md`. Ver *Pergunta bloqueante* na proposta. |
+| Quantidade tratada como ponto flutuante em algum ponto do caminho, produzindo erro de arredondamento no saldo. | `Quantidade` guarda milésimos como inteiro e concentra toda a aritmética; nenhuma camada acima do repositório manipula quantidade crua (`arquitetura.md`). Teste de domínio somando e subtraindo valores fracionários em sequência. |
 | Saída simultânea de dois usuários produzindo saldo negativo. | Conferência e gravação na mesma transação, com bloqueio das linhas de movimentação do material (D7). Teste de domínio cobrindo o limite exato entre saldo e quantidade. |
 | Desvio silencioso entre a aparência implementada e a referência visual. | A referência é a base de conferência de cada tela. Os sete valores de espaçamento fora da base 4px são normalizados de forma explícita, não caso a caso. |
 | PostgreSQL de desenvolvimento não documentado; a change introduz o primeiro banco do projeto. | Documentar como subir a instância local e o que `.env.example` exige, na mesma fase que cria o schema. |
@@ -108,4 +138,4 @@ Nomeadas pela funcionalidade afetada. As sete primeiras já constam do `PRD-00-i
 - **Acesso / expiração:** a dúvida do PRD-01 foi respondida por `tech-stack.md`, que fixa expiração absoluta de 8 horas sem renovação por uso. Registrada aqui apenas para fechar o item.
 - **Usuários / senha:** existe regra mínima de senha? Não bloqueia: sem decisão, exige-se apenas presença e coincidência com a confirmação.
 - **Usuários / demais ações:** alterar dados, trocar senha, inativar e reativar estão fora desta POC; a tela onde aconteceriam segue indefinida. Não bloqueia.
-- **Quantidade / escala decimal:** **bloqueia.** `arquitetura.md` remete a uma decisão `D-03` do `PRD-00-indice.md` que não existe naquele documento. Unidade, caixa, pacote e resma são naturalmente inteiras; metro e litro admitem fração. A resposta pertence ao `PRD-00-indice.md`.
+- **Quantidade / escala decimal:** **resolvida.** Registrada no `PRD-00-indice.md` como a decisão **Escala da quantidade**: três casas decimais para toda unidade de medida, exibição cortando zeros à direita. Ver D10.

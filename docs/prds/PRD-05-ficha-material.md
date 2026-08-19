@@ -51,11 +51,11 @@ Usuário que precisa saber quanto há de um item e quem levou as últimas unidad
 
 ## Critérios de aceite
 
-- **Dado que** um material teve entrada de 10 e saída de 3 resmas, **quando** abro a ficha, **então** o saldo exibido é 7 resmas e não existe campo para editá-lo.
-- **Dado que** registrei uma saída errada, **quando** a estorno com justificativa, **então** o saldo volta ao valor anterior e histórico mostra a saída original e o estorno vinculado a ela.
-- **Dado que** tento estornar sem escrever a justificativa, **quando** confirmo, **então** o sistema recusa e pede o motivo.
-- **Dado que** o material já tem movimentações, **quando** abro a ficha, **então** a exclusão aparece desabilitada com a explicação do bloqueio.
-- **Dado que** o material não tem movimentações, **quando** escolho excluir, **então** vejo a confirmação com o nome do material e, ao confirmar, volto à consulta sem ele.
+- **CA-01** — **Dado que** um material teve entrada de 10 e saída de 3 resmas, **quando** abro a ficha, **então** o saldo exibido é 7 resmas e não existe campo para editá-lo.
+- **CA-02** — **Dado que** registrei uma saída errada, **quando** a estorno com justificativa, **então** o saldo volta ao valor anterior e histórico mostra a saída original e o estorno vinculado a ela.
+- **CA-03** — **Dado que** tento estornar sem escrever a justificativa, **quando** confirmo, **então** o sistema recusa e pede o motivo.
+- **CA-04** — **Dado que** o material já tem movimentações, **quando** abro a ficha, **então** a exclusão aparece desabilitada com a explicação do bloqueio.
+- **CA-05** — **Dado que** o material não tem movimentações, **quando** escolho excluir, **então** vejo a confirmação com o nome do material e, ao confirmar, volto à consulta sem ele.
 
 ## Observações e decisões
 

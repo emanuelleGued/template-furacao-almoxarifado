@@ -1,33 +1,35 @@
 # Tarefas
 
-Ordenadas por dependência. A fase 3 não inicia sem a resposta da pergunta bloqueante registrada na proposta e em `design.md` (**Quantidade / escala decimal**); as fases 1 e 2 não dependem dela.
+Ordenadas por dependência. As telas vêm antes do Prisma: o adaptador em memória as torna
+navegáveis sem banco, e a troca para o Prisma na fase 11 não altera código de tela (D11).
+
+Nenhuma fase está bloqueada: a escala decimal da quantidade foi decidida antes do início da implementação e está registrada no `PRD-00-indice.md` como a decisão **Escala da quantidade** (ver D10 em `design.md`).
 
 Todos os comandos do OpenSpec exigem Node 20 ou superior (D9).
 
 ## 1. Fundação do projeto
 
-- [ ] 1.1 Inicializar a aplicação Next.js 15 com App Router, React 19 e TypeScript em modo `strict`, usando pnpm, sem nenhuma dependência fora de `tech-stack.md`
-- [ ] 1.2 Configurar Tailwind CSS e instalar shadcn/ui com os componentes copiados para o repositório
-- [ ] 1.3 Configurar ESLint e Prettier, e registrar o portão local de verificação descrito em `conventions.md`
-- [ ] 1.4 Configurar Vitest para a faixa de domínio e casos de uso, sem banco e sem variável de ambiente
-- [ ] 1.5 Criar as pastas das quatro camadas de `arquitetura.md` e a regra de lint que impede o domínio de importar Next.js, React e Prisma
-- [ ] 1.6 Criar `.env.example` versionado, listando todas as variáveis exigidas e nenhum valor real
-- [ ] 1.7 Documentar no README como subir o PostgreSQL de desenvolvimento e o que preencher no `.env`
+- [x] 1.1 Inicializar a aplicação Next.js 15 com App Router, React 19 e TypeScript em modo `strict`, usando pnpm, sem nenhuma dependência fora de `tech-stack.md`
+- [x] 1.2 Configurar Tailwind CSS e instalar shadcn/ui com os componentes copiados para o repositório
+- [x] 1.3 Configurar ESLint e Prettier, e registrar o portão local de verificação descrito em `conventions.md`
+- [x] 1.4 Configurar Vitest para a faixa de domínio e casos de uso, sem banco e sem variável de ambiente
+- [x] 1.5 Criar as pastas das quatro camadas de `arquitetura.md` e a regra de lint que impede o domínio de importar Next.js, React e Prisma
+- [x] 1.6 Criar `.env.example` versionado, listando todas as variáveis exigidas e nenhum valor real
+- [x] 1.7 Documentar no README como subir o PostgreSQL de desenvolvimento e o que preencher no `.env`
 
 ## 2. Tema IDE.IA
 
-- [ ] 2.1 Adicionar as sete variações `woff2` de Urbanist ao repositório e carregá-las pelo mecanismo de fontes locais do Next.js (D3)
-- [ ] 2.2 Definir os tokens de cor da marca como propriedades CSS e ligá-los às variáveis de tema que o shadcn consome (D1)
-- [ ] 2.3 Definir a escala tipográfica e a de espaçamento da aplicação a partir da referência visual, normalizando os sete valores fora da base 4px e o valor de cor sem token (D1)
-- [ ] 2.4 Implementar a casca da aplicação — navegação entre materiais e cadastro de usuário, marca, ação Sair e indicação da área corrente
-- [ ] 2.5 Implementar o retorno de ação concluída, sem bloquear a tela
-- [ ] 2.6 Conferir que nenhuma tela requisita recurso de aparência a domínio externo
+- [x] 2.1 Adicionar as sete variações `woff2` de Urbanist ao repositório e carregá-las pelo mecanismo de fontes locais do Next.js (D3)
+- [x] 2.2 Definir os tokens de cor da marca como propriedades CSS e ligá-los às variáveis de tema que o shadcn consome (D1)
+- [x] 2.3 Definir a escala tipográfica e a de espaçamento da aplicação a partir da referência visual, normalizando os sete valores fora da base 4px e o valor de cor sem token (D1)
+- [x] 2.4 Implementar a casca da aplicação — navegação entre materiais e cadastro de usuário, marca, ação Sair e indicação da área corrente
+- [x] 2.5 Implementar o retorno de ação concluída, sem bloquear a tela
+- [x] 2.6 Conferir que nenhuma tela requisita recurso de aparência a domínio externo
 
 ## 3. Domínio
 
-Bloqueada pela pergunta **Quantidade / escala decimal**.
-
-- [ ] 3.1 Implementar o value object `Quantidade` com a escala decidida, criação a partir de string decimal, soma, subtração, comparação e formatação, com testes de Vitest
+- [x] 3.1 Implementar o value object `Quantidade` guardando milésimos como inteiro, com criação a partir de string decimal, soma, subtração, comparação e formatação que corta zeros à direita, com testes de Vitest (D10)
+- [x] 3.1.1 Cobrir com teste a recusa de quantidade com mais casas do que a escala admite e a soma encadeada de valores fracionários sem erro de arredondamento
 - [ ] 3.2 Implementar os enums do domínio: categoria, unidade de medida, tipo de movimentação, motivo de entrada e motivo de saída
 - [ ] 3.3 Implementar a entidade `Material` e seus invariantes, com testes cobrindo estoque mínimo não negativo e a exigência de datas do perecível
 - [ ] 3.4 Implementar a entidade `Movimentacao` e seus invariantes, incluindo quantidade positiva e vínculo do estorno com a movimentação de origem
@@ -36,15 +38,15 @@ Bloqueada pela pergunta **Quantidade / escala decimal**.
 - [ ] 3.7 Implementar o cálculo da situação de validade de um perecível
 - [ ] 3.8 Implementar os erros de domínio e os schemas Zod das entradas de dados
 
-## 4. Persistência
 
-- [ ] 4.1 Escrever o schema Prisma dos modelos `Material`, `Movimentacao` e `Usuario`, com os nomes de tabela e coluna de `conventions.md`
-- [ ] 4.2 Gerar e aplicar a primeira migration
-- [ ] 4.3 Implementar a tradução entre linhas do banco e entidades, incluindo a conversão de quantidade nos dois sentidos, confinada à infraestrutura
-- [ ] 4.4 Implementar `RepositorioDeMateriais`, montando o modelo de leitura `MaterialComSaldo` por agregação (D7)
-- [ ] 4.5 Implementar `RepositorioDeMovimentacoes`, com o bloqueio de linha exigido pela validação de saída (D7)
-- [ ] 4.6 Implementar `RepositorioDeUsuarios` e o hash argon2id
-- [ ] 4.7 Implementar a semente do primeiro usuário, lendo a credencial de configuração por ambiente
+## 4. Portas e repositórios em memória
+
+- [ ] 4.1 Declarar as portas na camada de aplicação: `RepositorioDeMateriais`, `RepositorioDeMovimentacoes`, `RepositorioDeUsuarios` e `HashDeSenha` (D11)
+- [ ] 4.2 Declarar o modelo de leitura `MaterialComSaldo` na camada de aplicação
+- [ ] 4.3 Implementar os repositórios em memória, montando `MaterialComSaldo` por agregação das movimentações (D11)
+- [ ] 4.4 Implementar `HashDeSenha` em memória para o desenvolvimento sem banco, com a mesma interface que o argon2id vai cumprir
+- [ ] 4.5 Implementar a carga de exemplo do modo em memória, cobrindo material com e sem movimentação, perecível vencido e válido, e saldo abaixo do mínimo
+- [ ] 4.6 Implementar a seleção do adaptador por variável de ambiente, com o modo em memória como padrão enquanto o Prisma não existir (D11)
 
 ## 5. Autenticação
 
@@ -101,11 +103,24 @@ Bloqueada pela pergunta **Quantidade / escala decimal**.
 - [ ] 10.3 Implementar a recusa por senhas divergentes, limpando os dois campos de senha
 - [ ] 10.4 Verificar os cenários da spec `cadastro-de-usuarios`, incluindo e-mail pertencente a usuário inativo
 
-## 11. Validação final
+## 11. Persistência com Prisma
 
-- [ ] 11.1 Rodar o portão local completo: lint, formatação, checagem de tipos e Vitest, com tudo passando
-- [ ] 11.2 Percorrer as sete telas contra a referência visual e registrar qualquer desvio deliberado
-- [ ] 11.3 Conferir cada cenário das sete specs desta change, um a um, na aplicação em execução
-- [ ] 11.4 Conferir que nenhuma dependência fora de `tech-stack.md` entrou no `package.json` e que o lockfile está versionado
-- [ ] 11.5 Conferir que nenhuma credencial, segredo ou URL de banco aparece no código, em teste, na semente ou na documentação
-- [ ] 11.6 Rodar `openspec validate telas-da-poc` e arquivar a change
+Substitui o adaptador em memória pelo definitivo. Nenhuma tela muda: as portas são as mesmas (D11).
+
+- [ ] 11.1 Escrever o schema Prisma dos modelos `Material`, `Movimentacao` e `Usuario`, com os nomes de tabela e coluna de `conventions.md`
+- [ ] 11.2 Gerar e aplicar a primeira migration
+- [ ] 11.3 Implementar a tradução entre linhas do banco e entidades, incluindo a conversão de quantidade nos dois sentidos, confinada à infraestrutura
+- [ ] 11.4 Implementar `RepositorioDeMateriais`, montando o modelo de leitura `MaterialComSaldo` por agregação (D7)
+- [ ] 11.5 Implementar `RepositorioDeMovimentacoes`, com o bloqueio de linha exigido pela validação de saída (D7)
+- [ ] 11.6 Implementar `RepositorioDeUsuarios` e o hash argon2id
+- [ ] 11.7 Implementar a semente do primeiro usuário, lendo a credencial de configuração por ambiente
+- [ ] 11.8 Trocar o adaptador padrão para o Prisma e confirmar que as sete telas funcionam sem alteração de código de tela
+
+## 12. Validação final
+
+- [ ] 12.1 Rodar o portão local completo: lint, formatação, checagem de tipos e Vitest, com tudo passando
+- [ ] 12.2 Percorrer as sete telas contra a referência visual e registrar qualquer desvio deliberado
+- [ ] 12.3 Conferir cada cenário das sete specs desta change, um a um, na aplicação em execução
+- [ ] 12.4 Conferir que nenhuma dependência fora de `tech-stack.md` entrou no `package.json` e que o lockfile está versionado
+- [ ] 12.5 Conferir que nenhuma credencial, segredo ou URL de banco aparece no código, em teste, na semente ou na documentação
+- [ ] 12.6 Rodar `openspec validate telas-da-poc` e arquivar a change

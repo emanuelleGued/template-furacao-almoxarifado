@@ -51,11 +51,11 @@ Usuário no momento em que recebe uma compra ou atende um pedido no balcão do a
 
 ## Critérios de aceite
 
-- **Dado que** um material tem saldo 5 resmas, **quando** registro uma entrada de 10 por compra, **então** o saldo passa a 15 e a movimentação aparece no histórico com meu nome e a data e hora do sistema.
-- **Dado que** um material tem saldo 3 resmas, **quando** tento registrar saída de 4, **então** o sistema recusa informando que o saldo disponível é de 3 resmas e nada é gravado.
-- **Dado que** escolhi o tipo saída, **quando** confirmo sem informar quem retirou, **então** o sistema recusa e pede o nome.
-- **Dado que** informo quantidade zero, **quando** confirmo, **então** o sistema pede uma quantidade maior que zero.
-- **Dado que** registrei a movimentação, **quando** volto à ficha, **então** ela aparece no topo do histórico e não oferece nenhuma ação de editar ou apagar.
+- **CA-01** — **Dado que** um material tem saldo 5 resmas, **quando** registro uma entrada de 10 por compra, **então** o saldo passa a 15 e a movimentação aparece no histórico com meu nome e a data e hora do sistema.
+- **CA-02** — **Dado que** um material tem saldo 3 resmas, **quando** tento registrar saída de 4, **então** o sistema recusa informando que o saldo disponível é de 3 resmas e nada é gravado.
+- **CA-03** — **Dado que** escolhi o tipo saída, **quando** confirmo sem informar quem retirou, **então** o sistema recusa e pede o nome.
+- **CA-04** — **Dado que** informo quantidade zero, **quando** confirmo, **então** o sistema pede uma quantidade maior que zero.
+- **CA-05** — **Dado que** registrei a movimentação, **quando** volto à ficha, **então** ela aparece no topo do histórico e não oferece nenhuma ação de editar ou apagar.
 
 ## Observações e decisões
 

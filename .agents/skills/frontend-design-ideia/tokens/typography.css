@@ -13,9 +13,10 @@
      - Montserrat is used as-is — it's already a Google Font. */
 
 :root {
-  --font-display: 'Mulish', 'Clear Sans', -apple-system, sans-serif;   /* substitutes Clear Sans Bold */
-  --font-body: 'Montserrat', -apple-system, sans-serif;                /* as source */
-  --font-accent: 'Sora', -apple-system, sans-serif;                    /* substitutes Codec Pro */
+  --font-display:
+    "Mulish", "Clear Sans", -apple-system, sans-serif; /* substitutes Clear Sans Bold */
+  --font-body: "Montserrat", -apple-system, sans-serif; /* as source */
+  --font-accent: "Sora", -apple-system, sans-serif; /* substitutes Codec Pro */
 
   /* Display / titles — Clear Sans Bold in source, always weight 800/900 */
   --text-display-size: clamp(48px, 6vw, 96px);

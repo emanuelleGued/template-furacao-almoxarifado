@@ -39,10 +39,10 @@ Usuário já autenticado, quando alguém novo passa a trabalhar no laboratório.
 
 ## Critérios de aceite
 
-- **Dado que** informei nome completo, e-mail e senha, **quando** salvo, **então** o usuário é criado em atividade e consegue entrar com esse e-mail e senha.
-- **Dado que** o e-mail já pertence a outro usuário, **quando** salvo, **então** o sistema recusa, pede outro e-mail e nada é gravado.
-- **Dado que** a senha e a confirmação não coincidem, **quando** confirmo, **então** o sistema recusa antes de enviar e as senhas são limpas.
-- **Dado que** o usuário foi criado, **quando** ele registra uma movimentação, **então** aparece como responsável no histórico do material.
+- **CA-01** — **Dado que** informei nome completo, e-mail e senha, **quando** salvo, **então** o usuário é criado em atividade e consegue entrar com esse e-mail e senha.
+- **CA-02** — **Dado que** o e-mail já pertence a outro usuário, **quando** salvo, **então** o sistema recusa, pede outro e-mail e nada é gravado.
+- **CA-03** — **Dado que** a senha e a confirmação não coincidem, **quando** confirmo, **então** o sistema recusa antes de enviar e as senhas são limpas.
+- **CA-04** — **Dado que** o usuário foi criado, **quando** ele registra uma movimentação, **então** aparece como responsável no histórico do material.
 
 ## Observações e decisões
 

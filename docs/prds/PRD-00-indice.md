@@ -78,6 +78,7 @@ Escritos aqui uma única vez. Os PRDs de tela citam pelo nome.
 - **Campos obrigatórios do material:** nome, descrição, categoria, unidade de medida e local de guarda; para perecível, também fabricação e validade. Observações e estoque mínimo são opcionais, e o estoque mínimo nunca é negativo.
 - **Rotas:** definidas nesta POC; o minimundo não trata de navegação.
 - **Usuário:** todo usuário tem nível de administrador e acessa todas as funcionalidades. Não há perfis nem níveis de permissão.
+- **Escala da quantidade:** decisão desta POC. Toda quantidade do sistema — de movimentação, de estoque mínimo e de saldo — tem escala decimal de três casas, qualquer que seja a unidade de medida. Três casas cobrem metro e litro sem que a escala precise variar por unidade. A exibição corta os zeros à direita: dez resmas aparecem como "10", meio litro como "0,5".
 - **Primeiro usuário semeado:** decisão desta POC. A instalação cria o primeiro usuário, porque a tela de cadastro exige sessão ativa.
 - **Exclusão na ficha:** decisão desta POC. O botão fica apenas em `/materiais/:codigo`, onde os dados e a existência de histórico estão visíveis.
 

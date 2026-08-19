@@ -40,10 +40,10 @@ Usuário que recebeu no depósito um item novo, ainda sem cadastro. O cadastro r
 
 ## Critérios de aceite
 
-- **Dado que** preenchi nome, descrição, categoria, unidade e local, **quando** salvo, **então** o material é criado com código gerado pelo sistema e saldo zero, e vejo sua ficha.
-- **Dado que** escolhi a categoria perecível, **quando** salvo sem a data de validade, **então** o sistema recusa e nada é gravado.
-- **Dado que** já existe "Papel A4 branco", **quando** tento salvar outro material com esse nome, **então** o sistema recusa e me oferece abrir o material existente para registrar uma entrada.
-- **Dado que** informei estoque mínimo negativo, **quando** salvo, **então** o sistema pede um valor de zero ou mais e não grava.
+- **CA-01** — **Dado que** preenchi nome, descrição, categoria, unidade e local, **quando** salvo, **então** o material é criado com código gerado pelo sistema e saldo zero, e vejo sua ficha.
+- **CA-02** — **Dado que** escolhi a categoria perecível, **quando** salvo sem a data de validade, **então** o sistema recusa e nada é gravado.
+- **CA-03** — **Dado que** já existe "Papel A4 branco", **quando** tento salvar outro material com esse nome, **então** o sistema recusa e me oferece abrir o material existente para registrar uma entrada.
+- **CA-04** — **Dado que** informei estoque mínimo negativo, **quando** salvo, **então** o sistema pede um valor de zero ou mais e não grava.
 
 ## Observações e decisões
 

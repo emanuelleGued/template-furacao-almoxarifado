@@ -1,121 +1,125 @@
-# Template SDD com OpenSpec
+# Almoxarifado — laboratório IDE.IA
 
-Este repositório é um ponto de partida para organizar projetos com Spec-Driven Development (SDD) e [OpenSpec](https://openspec.dev/). Ele não inclui uma aplicação ou stack pronta: cada equipe define as escolhas técnicas e implementa o próprio projeto.
+Aplicação web para controlar os materiais do almoxarifado: cadastrar itens do catálogo, registrar
+o que entra e o que sai, e acompanhar o saldo calculado a partir das movimentações.
 
-## O que este template oferece
+O domínio está descrito em [`docs/prds/minimundo.md`](./docs/prds/minimundo.md), que é a única
+fonte de verdade sobre as regras. O escopo desta POC, as telas e os invariantes estão em
+[`docs/prds/PRD-00-indice.md`](./docs/prds/PRD-00-indice.md).
 
-- Estrutura de documentação de produto por tela em `docs/prds/`.
-- Documentos de constituição para registrar stack, arquitetura e convenções em `docs/Constituicao/`.
-- Configuração e regras do OpenSpec em `openspec/config.yaml`.
-- Instruções para agentes em `AGENTS.md`, `docs/AGENTS.md` e `docs/prds/AGENTS.md`.
+## Stack
 
-## PRDs são opcionais
-
-Os PRDs ajudam a transformar uma necessidade de produto em uma change mais clara: registram o comportamento esperado das telas, regras e critérios de aceite antes da proposta e da implementação. Eles são recomendados quando o projeto possui interface, fluxos ou regras de negócio que precisam ser alinhados.
-
-Se o projeto não for usar essa dinâmica, remova a pasta `docs/prds/` e retire as referências a ela destes arquivos:
-
-- `docs/AGENTS.md` — seção **PRDs**;
-- `openspec/config.yaml` — referências a `docs/prds/AGENTS.md` e `docs/prds/` no campo `context`.
-
-O restante do fluxo do OpenSpec continua funcionando normalmente sem PRDs.
+Next.js 15 com App Router, React 19, TypeScript em modo `strict`, Tailwind CSS, shadcn/ui, Prisma
+sobre PostgreSQL, Auth.js v5 e Vitest. As decisões estão fixadas em
+[`docs/Constituicao/tech-stack.md`](./docs/Constituicao/tech-stack.md) — nenhuma dependência entra
+no projeto sem constar lá primeiro.
 
 ## Pré-requisitos
 
-- Git
-- Node.js 20.19 ou superior
-- Um assistente de código compatível com as instruções do repositório
+- **Node.js 20.19 ou superior.** A versão está fixada em [`.nvmrc`](./.nvmrc); com nvm, rode
+  `nvm use`. O CLI do OpenSpec também exige Node 20+.
+- **pnpm**, habilitado pelo corepack:
 
-Verifique a versão do Node.js:
+  ```bash
+  corepack enable pnpm
+  ```
+
+- **PostgreSQL**, na versão 16 ou superior.
+
+## Subindo o PostgreSQL de desenvolvimento
+
+Com Docker, um contêiner dedicado ao projeto resolve:
 
 ```bash
-node --version
+docker run -d \
+  --name almoxarifado-db \
+  -e POSTGRES_USER=almoxarifado \
+  -e POSTGRES_PASSWORD=almoxarifado \
+  -e POSTGRES_DB=almoxarifado \
+  -p 5432:5432 \
+  -v almoxarifado-db:/var/lib/postgresql/data \
+  postgres:16
 ```
 
-## Começando
+Depois disso, `docker start almoxarifado-db` e `docker stop almoxarifado-db` sobem e param a
+instância. O volume `almoxarifado-db` preserva os dados entre reinícios.
 
-Instale o OpenSpec globalmente:
+Uma instalação nativa do PostgreSQL também serve; o que importa é ter um banco acessível e a URL
+correspondente no `.env`.
+
+## Configuração
+
+Copie o exemplo versionado e preencha os valores:
 
 ```bash
-npm install -g @fission-ai/openspec@latest
+cp .env.example .env
 ```
 
-Verifique a instalação:
+O [`.env.example`](./.env.example) lista todas as variáveis exigidas e descreve cada uma. Para o
+contêiner sugerido acima, a URL de conexão é:
+
+```text
+DATABASE_URL=postgresql://almoxarifado:almoxarifado@localhost:5432/almoxarifado?schema=public
+```
+
+Gere o segredo da sessão com `openssl rand -base64 32` e preencha `AUTH_SECRET`. As variáveis
+`USUARIO_INICIAL_*` definem o primeiro usuário, criado pelo seed — a tela de cadastro de usuário
+exige sessão ativa, então alguém precisa existir antes dela.
+
+O `.env` nunca é versionado, e nenhuma credencial aparece no código, em teste ou na documentação.
+
+## Rodando
 
 ```bash
-openspec --version
+pnpm install
+pnpm dev
+```
+
+## Portão local
+
+Não há integração contínua. A verificação é local e obrigatória antes de concluir qualquer change:
+
+```bash
+pnpm verificar
+```
+
+O comando roda lint, checagem de formatação, checagem de tipos e Vitest, nessa ordem. As faixas de
+teste de integração de repositório e de ponta a ponta estão adiadas e não fazem parte do portão —
+ligá-las exige alterar [`docs/Constituicao/tech-stack.md`](./docs/Constituicao/tech-stack.md).
+
+Cada etapa também roda isolada: `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm test`.
+
+## Organização do código
+
+As quatro camadas e as regras de quem pode importar quem estão em
+[`docs/Constituicao/arquitetura.md`](./docs/Constituicao/arquitetura.md):
+
+```text
+src/app, src/components   Web — rotas, telas, Server Actions, componentes
+src/application           Casos de uso, portas e modelos de leitura
+src/domain                Regras de negócio em TypeScript puro
+src/infrastructure        Prisma, repositórios, Auth.js, hash de senha
+```
+
+O ESLint impede que o domínio importe Next.js, React ou Prisma, e que a aplicação conheça a
+infraestrutura. As convenções de nome, teste e commit estão em
+[`docs/Constituicao/conventions.md`](./docs/Constituicao/conventions.md).
+
+## Fluxo de trabalho
+
+O projeto usa [OpenSpec](https://openspec.dev/) para planejar e registrar mudanças. Uma change
+reúne os artefatos em `openspec/changes/<nome>/`:
+
+- `proposal.md` — objetivo, escopo e não-objetivos;
+- `design.md` — decisões técnicas, alternativas e riscos;
+- `specs/` — requisitos e cenários;
+- `tasks.md` — etapas de implementação e validação.
+
+```bash
 openspec list
+openspec status --change <nome>
+openspec validate <nome> --strict
 ```
 
-> O OpenSpec já está inicializado neste repositório. Não é necessário executar `openspec init` após o clone.
-
-## Como usar o repositório
-
-### 1. Registre as decisões técnicas
-
-Preencha, conforme necessário:
-
-- `docs/Constituicao/tech-stack.md`
-- `docs/Constituicao/arquitetura.md`
-- `docs/Constituicao/conventions.md`
-
-### 2. Organize os requisitos de produto
-
-Crie `docs/prds/PRD-00-indice.md` a partir de `docs/prds/TEMPLATE_PRD_INDICE.md` para listar as telas e seus fluxos.
-
-Para cada tela relevante, crie um arquivo `PRD-XX-<nome-da-tela>.md` a partir de `docs/prds/TEMPLATE_PRD_TELA.md`.
-
-Os templates são somente uma base: adapte a documentação ao que fizer sentido para o projeto. Depois de criar os PRDs necessários, remova `TEMPLATE_PRD_INDICE.md` e `TEMPLATE_PRD_TELA.md` para que apenas os documentos reais do projeto permaneçam no diretório.
-
-### 3. Crie uma change no OpenSpec
-
-Com os PRDs e documentos técnicos relevantes preenchidos, peça ao assistente de código para explorar e propor a mudança. Exemplos:
-
-```text
-Explore o fluxo de cadastro de clientes usando os PRDs relacionados.
-```
-
-```text
-Crie uma change OpenSpec para implementar a tela de cadastro de clientes.
-```
-
-A change reúne os artefatos de planejamento em `openspec/changes/<nome-da-change>/`:
-
-- `proposal.md`: objetivo, escopo e não-objetivos;
-- `design.md`: decisões técnicas, alternativas e riscos;
-- `specs/`: requisitos e cenários;
-- `tasks.md`: etapas de implementação e validação.
-
-### 4. Implemente e valide
-
-Depois que a change estiver pronta, peça ao assistente para implementar as tarefas. Ao final, valide a mudança:
-
-```bash
-/openspec apply <nome-da-change>
-```
-
-Quando a implementação estiver concluída, arquive a change para preservar o histórico:
-
-```bash
-/openspec archive <nome-da-change>
-```
-
-## Fluxo resumido
-
-```text
-Decisões técnicas + PRDs
-          ↓
-Change OpenSpec
-          ↓
-Implementação
-          ↓
-Validação e arquivamento
-```
-
-## Documentação Oficial do OpenSpec
-
-
-```
-Consulte a [documentação oficial do openspec](https://openspec.dev/docs) e a [referência da CLI](https://openspec.dev/docs/reference/cli) para outras opções de instalação e comandos.  
-
-```
+As instruções para agentes estão em [`AGENTS.md`](./AGENTS.md),
+[`docs/AGENTS.md`](./docs/AGENTS.md) e [`docs/prds/AGENTS.md`](./docs/prds/AGENTS.md).

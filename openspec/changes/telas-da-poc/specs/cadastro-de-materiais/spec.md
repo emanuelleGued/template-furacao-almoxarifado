@@ -12,6 +12,8 @@ O material SHALL ter como obrigatórios nome, descrição, categoria, unidade de
 
 A categoria SHALL ser uma entre perecível, componente de TI, uso comum, limpeza e ferramenta. A unidade de medida SHALL ser uma entre unidade, caixa, pacote, resma, metro e litro.
 
+O estoque mínimo SHALL admitir a mesma escala decimal das demais quantidades do sistema, fixada pela decisão **Escala da quantidade** (`PRD-00-indice.md`).
+
 Nenhum formulário SHALL apresentar campo de saldo: o saldo decorre exclusivamente das movimentações (**Saldo derivado**).
 
 #### Scenario: Campo obrigatório vazio

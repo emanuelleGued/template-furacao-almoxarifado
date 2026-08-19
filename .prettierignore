@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+build
+coverage
+pnpm-lock.yaml
+next-env.d.ts
+
+# Documentacao e artefatos do OpenSpec sao escritos a mao; Prettier
+# formata apenas o codigo do projeto.
+docs
+openspec
+*.md

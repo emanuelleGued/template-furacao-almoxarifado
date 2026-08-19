@@ -42,7 +42,7 @@ Regras de negócio do almoxarifado, em TypeScript puro.
 - Erros de domínio.
 - Schemas Zod das entradas de dados, porque precisam ser importáveis pelo formulário e pelo servidor.
 
-Toda quantidade do sistema é o value object `Quantidade`. Ele guarda a menor subunidade como inteiro, nunca ponto flutuante, e o valor cabe com folga no inteiro seguro do JavaScript. A escala decimal — quantas casas a menor subunidade representa — é regra de domínio e tem uma única fonte de verdade: a decisão **D-03** do `docs/prds/PRD-00-indice.md`. Este documento não repete a escala. Ele expõe criação a partir de string decimal, soma, subtração, comparação e formatação, e é o único tipo de quantidade usado no domínio e na aplicação — para quantidade de movimentação, para estoque mínimo e para o saldo.
+Toda quantidade do sistema é o value object `Quantidade`. Ele guarda a menor subunidade como inteiro, nunca ponto flutuante, e o valor cabe com folga no inteiro seguro do JavaScript. A escala decimal — quantas casas a menor subunidade representa — é regra de domínio e tem uma única fonte de verdade: a decisão **Escala da quantidade** do `docs/prds/PRD-00-indice.md`. Este documento não repete a escala. Ele expõe criação a partir de string decimal, soma, subtração, comparação e formatação, e é o único tipo de quantidade usado no domínio e na aplicação — para quantidade de movimentação, para estoque mínimo e para o saldo.
 
 Nenhuma camada acima do repositório manipula quantidade como `number`, como string solta ou como `Prisma.Decimal`. Aritmética de quantidade acontece dentro de `Quantidade`, nunca com operadores em cima de valores crus.
 

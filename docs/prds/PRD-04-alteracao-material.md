@@ -42,11 +42,11 @@ Usuário que percebeu um dado errado ou desatualizado: o material mudou de prate
 
 ## Critérios de aceite
 
-- **Dado que** um material já tem movimentações, **quando** abro a alteração, **então** a unidade de medida está desabilitada com a explicação do bloqueio, e os outros campos continuam editáveis.
-- **Dado que** um material ainda não tem movimentações, **quando** troco a unidade e salvo, **então** a alteração é aceita.
-- **Dado que** troco a categoria para perecível, **quando** salvo sem informar a validade, **então** o sistema recusa e nada é gravado.
-- **Dado que** informo um nome já usado por outro material, **quando** salvo, **então** o sistema recusa e pede um nome diferente.
-- **Dado que** alterei o local de guarda, **quando** salvo, **então** o saldo e o histórico permanecem exatamente como estavam.
+- **CA-01** — **Dado que** um material já tem movimentações, **quando** abro a alteração, **então** a unidade de medida está desabilitada com a explicação do bloqueio, e os outros campos continuam editáveis.
+- **CA-02** — **Dado que** um material ainda não tem movimentações, **quando** troco a unidade e salvo, **então** a alteração é aceita.
+- **CA-03** — **Dado que** troco a categoria para perecível, **quando** salvo sem informar a validade, **então** o sistema recusa e nada é gravado.
+- **CA-04** — **Dado que** informo um nome já usado por outro material, **quando** salvo, **então** o sistema recusa e pede um nome diferente.
+- **CA-05** — **Dado que** alterei o local de guarda, **quando** salvo, **então** o saldo e o histórico permanecem exatamente como estavam.
 
 ## Observações e decisões
 

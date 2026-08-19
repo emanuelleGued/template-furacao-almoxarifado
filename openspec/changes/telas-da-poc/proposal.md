@@ -34,7 +34,7 @@ Nenhuma. `openspec/specs/` está vazio; toda capacidade desta change é nova.
 - **Código:** o repositório inteiro. Não há código anterior a alterar ou quebrar.
 - **Banco:** primeiro schema Prisma e primeira migration. Exige PostgreSQL disponível em desenvolvimento — hoje o projeto não documenta como subi-lo.
 - **Configuração:** primeiro `.env.example`, com a URL do banco e o segredo do Auth.js.
-- **Documentação:** `docs/Constituicao/arquitetura.md` cita uma decisão `D-03` do `PRD-00-indice.md` que não existe naquele documento. A change não pode inventá-la; ver *Pergunta bloqueante* abaixo.
+- **Documentação:** resolvida nesta change. O `PRD-00-indice.md` ganhou a decisão **Escala da quantidade**, e `docs/Constituicao/arquitetura.md` passou a citá-la pelo nome, no lugar da referência `D-03` que apontava para o vazio.
 - **Ferramental:** o CLI do OpenSpec exige Node 20+. O repositório está em Node 16.20.2, onde `openspec` falha ao carregar. Node 20.19.2 já está instalado na máquina.
 
 ## Não-objetivos
@@ -49,8 +49,10 @@ Fora de escopo por decisão desta change:
 - **Integração contínua.** Proibida em `tech-stack.md`.
 - **Modo escuro.** A referência visual desenha uma única superfície clara.
 
-## Pergunta bloqueante
+## Pergunta bloqueante resolvida
 
-**Qual a escala decimal da quantidade?** `arquitetura.md` determina que o value object `Quantidade` guarda a menor subunidade como inteiro e que a escala tem uma única fonte de verdade: a decisão `D-03` do `PRD-00-indice.md`. Essa decisão não existe — o PRD-00 não numera decisões, e nenhum de seus itens trata de escala.
+**Qual a escala decimal da quantidade?** A pergunta existia porque `arquitetura.md` remetia a uma decisão `D-03` do `PRD-00-indice.md` que não estava lá — o PRD-00 nunca numerou decisões, e nenhum de seus itens tratava de escala. Sem ela não era possível escrever o tipo da coluna no Prisma, o construtor de `Quantidade` nem o schema Zod.
 
-Sem essa definição não é possível escrever o tipo da coluna no Prisma, o construtor de `Quantidade`, nem o schema Zod da quantidade. As unidades de medida do minimundo se dividem: unidade, caixa, pacote e resma são naturalmente inteiras; metro e litro admitem fração. A resposta precisa vir antes da primeira task que toque quantidade, e precisa ser registrada no `PRD-00-indice.md`, não aqui.
+Resolvida antes do início da implementação: o `PRD-00-indice.md` passou a registrar a decisão **Escala da quantidade** — três casas decimais para toda unidade de medida, com a exibição cortando os zeros à direita. `arquitetura.md` cita a decisão pelo nome, como o resto da documentação faz com os invariantes.
+
+Nenhuma fase desta change está bloqueada.

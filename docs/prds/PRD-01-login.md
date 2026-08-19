@@ -32,10 +32,10 @@ Entrar no sistema com e-mail e senha e encerrar a sessão ao termina com o logou
 
 ## Critérios de aceite
 
-- **Dado que** sou um usuário em atividade, **quando** entro com e-mail e senha corretos, **então** chego à consulta de materiais.
-- **Dado que** meu acesso foi inativado, **quando** entro com a senha correta, **então** o sistema recusa e informa que o acesso está inativo.
-- **Dado que** errei a senha, **quando** confirmo, **então** vejo uma única mensagem pedindo para conferir e-mail e senha, e o e-mail digitado permanece no campo.
-- **Dado que** estou com a sessão aberta, **quando** escolho Sair, **então** volto ao login e não consigo acessar `/materiais` sem entrar de novo.
+- **CA-01** — **Dado que** sou um usuário em atividade, **quando** entro com e-mail e senha corretos, **então** chego à consulta de materiais.
+- **CA-02** — **Dado que** meu acesso foi inativado, **quando** entro com a senha correta, **então** o sistema recusa e informa que o acesso está inativo.
+- **CA-03** — **Dado que** errei a senha, **quando** confirmo, **então** vejo uma única mensagem pedindo para conferir e-mail e senha, e o e-mail digitado permanece no campo.
+- **CA-04** — **Dado que** estou com a sessão aberta, **quando** escolho Sair, **então** volto ao login e não consigo acessar `/materiais` sem entrar de novo.
 
 ## Observações e decisões
 

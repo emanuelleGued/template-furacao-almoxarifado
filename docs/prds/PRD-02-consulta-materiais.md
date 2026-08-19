@@ -47,11 +47,11 @@ Usuário que precisa saber se um item existe, onde está guardado e quanto resta
 
 ## Critérios de aceite
 
-- **Dado que** existem materiais cadastrados, **quando** abro a consulta, **então** vejo a lista ordenada por nome de A a Z, com o saldo atual de cada material.
-- **Dado que** busco por "papel", **quando** confirmo, **então** vejo "Papel A4 branco" no resultado, independentemente de maiúsculas e minúsculas.
-- **Dado que** filtrei pela categoria perecível e escolhi a validade vencido, **quando** vou para a página seguinte, **então** o filtro e a ordenação continuam aplicados.
-- **Dado que** dois materiais têm o mesmo saldo, **quando** ordeno por saldo, **então** eles aparecem em ordem alfabética entre si e não trocam de posição ao paginar.
-- **Dado que** nenhum material corresponde ao filtro, **quando** a lista carrega, **então** vejo a mensagem de nenhum resultado e a ação de limpar filtros.
+- **CA-01** — **Dado que** existem materiais cadastrados, **quando** abro a consulta, **então** vejo a lista ordenada por nome de A a Z, com o saldo atual de cada material.
+- **CA-02** — **Dado que** busco por "papel", **quando** confirmo, **então** vejo "Papel A4 branco" no resultado, independentemente de maiúsculas e minúsculas.
+- **CA-03** — **Dado que** filtrei pela categoria perecível e escolhi a validade vencido, **quando** vou para a página seguinte, **então** o filtro e a ordenação continuam aplicados.
+- **CA-04** — **Dado que** dois materiais têm o mesmo saldo, **quando** ordeno por saldo, **então** eles aparecem em ordem alfabética entre si e não trocam de posição ao paginar.
+- **CA-05** — **Dado que** nenhum material corresponde ao filtro, **quando** a lista carrega, **então** vejo a mensagem de nenhum resultado e a ação de limpar filtros.
 
 ## Observações e decisões
 

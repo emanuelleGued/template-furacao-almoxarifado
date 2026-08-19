@@ -6,9 +6,11 @@
    Drop this out if you want the Google-Fonts substitutes instead. */
 
 :root {
-  --font-display: 'Urbanist', -apple-system, sans-serif;   /* every heading/display moment (was 'Olney' — wrong: Olney is a rare accent, not the heading face) */
-  --font-body:    'Urbanist', -apple-system, sans-serif;   /* body + labels/eyebrows */
-  --font-accent:  'Urbanist', -apple-system, sans-serif;   /* MUST stay a readable face: in dark mode --font-accent carries card/label/table BODY text */
+  --font-display:
+    "Urbanist", -apple-system, sans-serif; /* every heading/display moment (was 'Olney' — wrong: Olney is a rare accent, not the heading face) */
+  --font-body: "Urbanist", -apple-system, sans-serif; /* body + labels/eyebrows */
+  --font-accent:
+    "Urbanist", -apple-system, sans-serif; /* MUST stay a readable face: in dark mode --font-accent carries card/label/table BODY text */
 }
 
 /* Olney is loaded (brand-fonts.css) but intentionally NOT wired to a token: it is a RARE display

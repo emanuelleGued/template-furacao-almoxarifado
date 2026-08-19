@@ -75,7 +75,7 @@ Se o sistema permite saída de material vencido, ou apenas descarte, é **dúvid
 
 A quantidade SHALL ser obrigatória e maior que zero, expressa na unidade de medida do material.
 
-A escala decimal admitida para a quantidade é **pergunta bloqueante** desta change: `docs/Constituicao/arquitetura.md` remete a uma decisão do `PRD-00-indice.md` que não existe naquele documento. A implementação SHALL não presumir uma escala.
+A escala decimal admitida SHALL ser a fixada pela decisão **Escala da quantidade** (`PRD-00-indice.md`), a mesma para toda unidade de medida. Quantidade com mais casas do que a escala admite SHALL ser recusada. A exibição de qualquer quantidade SHALL cortar os zeros à direita.
 
 #### Scenario: Quantidade zero
 - **WHEN** o usuário informa quantidade zero e confirma
@@ -86,6 +86,18 @@ A escala decimal admitida para a quantidade é **pergunta bloqueante** desta cha
 - **WHEN** o usuário informa quantidade negativa e confirma
 - **THEN** o sistema recusa com "Informe uma quantidade maior que zero."
 - **AND** nada é gravado
+
+#### Scenario: Quantidade fracionária dentro da escala
+- **WHEN** o usuário registra entrada de 0,5 em um material controlado em litro
+- **THEN** a movimentação é aceita e o saldo passa a refletir a fração
+
+#### Scenario: Quantidade além da escala admitida
+- **WHEN** o usuário informa uma quantidade com mais casas decimais do que a escala admite
+- **THEN** o sistema recusa e nada é gravado
+
+#### Scenario: Exibição sem zeros à direita
+- **WHEN** um material controlado em resma tem saldo de dez unidades inteiras
+- **THEN** o saldo é exibido como "10", sem casas decimais
 
 ### Requirement: Autoria e momento atribuídos pelo sistema
 
